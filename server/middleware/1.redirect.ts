@@ -143,12 +143,14 @@ export default eventHandler(async (event) => {
         }
       }
 
-      event.context.link = link
-      try {
-        await useAccessLog(event)
-      }
-      catch (error) {
-        console.error('Failed write access log:', error)
+         event.context.link = link
+      if (!isSocialBot(userAgent)) {
+        try {
+          await useAccessLog(event)
+        }
+        catch (error) {
+          console.error('Failed write access log:', error)
+        }
       }
 
       if (deviceRedirectUrl) {
